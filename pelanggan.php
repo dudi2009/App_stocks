@@ -102,7 +102,7 @@
                 while ($row = mysqli_fetch_assoc($query)) {
             ?>
                     <tr>
-                        <td><?= $row['id_pelanggan'] ?></td>
+                        <td><?= $no++ ?></td>
                         <td><?= $row['nama_pelanggan'] ?></td>
                         <td><?= $row['alamat'] ?></td>
                         <td><?= $row['no_hp'] ?></td>

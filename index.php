@@ -44,6 +44,9 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
                         <li class="nav-item <?= $hal == 'stock' ? 'active' : '' ?>">
                             <a class="nav-link" href="?hal=stock">Stock Barang</a>
                         </li>
+                        <li class="nav-item <?= $hal == 'transaksi' ? 'active' : '' ?>">
+                            <a class="nav-link" href="?hal=transaksi">transaksi</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                         </li>
@@ -90,6 +93,9 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
                 break;
             case 'stockUpdate':
                 include "stockUpdate.php";
+                break;
+            case 'transaksi':
+                include "transaksi.php";
                 break;
             default:
                 echo "<center><h3>Maaf. Halaman tidak di temukan !</h3></center>";
