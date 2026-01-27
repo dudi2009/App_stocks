@@ -18,9 +18,11 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
         rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous" />
+
 </head>
 
 <body >
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <header>
         <?php 
         $hal = isset($_GET['hal']) ? $_GET['hal'] : '';
@@ -41,9 +43,6 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
                         </li>
                         <li class="nav-item <?= $hal == 'stock' ? 'active' : '' ?>">
                             <a class="nav-link" href="?hal=stock">Stock Barang</a>
-                        </li>
-                        <li class="nav-item <?= $hal == 'tambah' ? 'active' : '' ?>">
-                            <a class="nav-link" href="?hal=tambah">tambah</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
@@ -74,14 +73,23 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
             case 'pelanggan':
                 include "pelanggan.php";
                 break;
-            case 'tambah':
-                include "tambah.php";
-                break;
             case 'stock':
                 include "stock.php";
                 break;
             case 'home':
                 include "home.php";
+                break;
+            case 'pelangganDelete':
+                include "pelangganDelete.php";
+                break;
+            case 'pelangganUpdate':
+                include "pelangganUpdate.php";
+                break;
+            case 'stockDelete':
+                include "stockDelete.php";
+                break;
+            case 'stockUpdate':
+                include "stockUpdate.php";
                 break;
             default:
                 echo "<center><h3>Maaf. Halaman tidak di temukan !</h3></center>";
@@ -96,14 +104,14 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
         <!-- place footer here -->
     </footer>
     <script
-        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
+    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+    
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

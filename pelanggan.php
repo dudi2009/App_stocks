@@ -45,26 +45,47 @@
             </div>
         </div>
     </form>
-       <?php
-        if (isset($_POST['submit'])) {
-            $nama = $_POST['nama'];
-            $alamat = $_POST['alamat'];
-            $no = $_POST['no'];
+    <?php
+    if (isset($_POST['submit'])) {
+        $nama = $_POST['nama'];
+        $alamat = $_POST['alamat'];
+        $no = $_POST['no'];
 
-            $sql = "INSERT INTO pelanggan (id_pelanggan, nama_pelanggan, alamat, no_hp)
+        $sql = "INSERT INTO pelanggan (id_pelanggan, nama_pelanggan, alamat, no_hp)
                 VALUES (NULL, '$nama', '$alamat', '$no')";
 
-            if (mysqli_query($koneksi, $sql)) {
-                echo "<div class='alert alert-success'>Siswa berhasil disimpan!</div>";
-            } else {
-                echo "<div class='alert alert-danger'>Error: " . mysqli_error($koneksi) . "</div>";
-            }
+        if (mysqli_query($koneksi, $sql)) {
+            echo "
+        <script>
+            Swal.fire({
+    		icon: 'success',
+    		title: 'Berhasil!',
+    		text: 'Data pelanggan berhasil disimpan'
+		}).then((result) => {
+   	 if (result.isConfirmed) {
+        window.location = 'index.php?hal=pelanggan';
+    }
+});
+        </script>
+        ";
+        } else {
+            echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Data gagal disimpan',
+                footer: '" . mysqli_error($koneksi) . "'
+            });
+        </script>
+        ";
         }
-        ?>
+    }
+    ?>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>id</th>
+                <th>No</th>
                 <th>Nama</th>
                 <th>Alamat</th>
                 <th>No Hp</th>
@@ -86,8 +107,9 @@
                         <td><?= $row['alamat'] ?></td>
                         <td><?= $row['no_hp'] ?></td>
                         <td>
-                            <a href="hapus_pelanggan.php?id=<?= $row['id_pelanggan'] ?>&nama_pelanggan=<?=$row['nama_pelanggan']?>" class="btn btn-danger">Hapus</a>
-                            <a href="edit_pelanggan.php?id=<?= $row['id_pelanggan'] ?>" class="btn btn-warning">Edit</a>
+                            <a href="?hal=pelangganDelete&id_pelanggan=<?php echo $row['id_pelanggan'] ?>&nama_pelanggan=<?= $row['nama_pelanggan'] ?>" class="btn btn-danger">Hapus</a>
+                            <a href="?hal=pelangganUpdate&id_pelanggan=<?php echo $row['id_pelanggan'] ?>&nama_pelanggan=<?= $row['nama_pelanggan'] ?>" class="btn btn-dark px-3">Edit</a>
+
                         </td>
 
 
@@ -97,6 +119,6 @@
             }
             ?>
         </tbody>
-     
+
     </table>
 </div>

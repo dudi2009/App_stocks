@@ -55,10 +55,31 @@
                 VALUES (NULL, '$nama', '$harga', '$stock')";
 
             if (mysqli_query($koneksi, $sql)) {
-                echo "<div class='alert alert-success'>Siswa berhasil disimpan!</div>";
-            } else {
-                echo "<div class='alert alert-danger'>Error: " . mysqli_error($koneksi) . "</div>";
-            }
+        echo "
+        <script>
+            Swal.fire({
+    		icon: 'success',
+    		title: 'Berhasil!',
+    		text: 'Data pelanggan berhasil disimpan'
+		}).then((result) => {
+   	 if (result.isConfirmed) {
+        window.location = 'index.php?hal=pelanggan';
+    }
+});
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Data gagal disimpan',
+                footer: '".mysqli_error($koneksi)."'
+            });
+        </script>
+        ";
+    }
         }
         ?>
     <table class="table table-striped">
@@ -86,8 +107,8 @@
                         <td><?= $row['harga'] ?></td>
                         <td><?= $row['stok'] ?></td>
                         <td>
-                            <a href="hapus_produk.php?id=<?= $row['id_produk'] ?>&nama_produk=<?=$row['nama_produk']?>" class="btn btn-danger">Hapus</a>
-                            <a href="edit_pelanggan.php?id=<?= $row['id_produk'] ?>" class="btn btn-warning">Edit</a>
+                            <a href="?hal=stockDelete&id_produk=<?php echo $row['id_produk'] ?>&nama_produk=<?= $row['nama_produk'] ?>" class="btn btn-danger">Hapus</a>
+                            <a href="?hal=stockUpdate&id_produk=<?php echo $row['id_produk'] ?>&nama_produk=<?= $row['nama_produk'] ?>" class="btn btn-dark px-3">Edit</a>
                         </td>
 
 
