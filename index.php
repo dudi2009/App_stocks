@@ -18,6 +18,21 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
         rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous" />
+        <style>
+            body{
+                background-color: #2b2b2b;
+            }
+            nav{
+               background-color: #2b2b2b;
+               color: white; 
+            }
+            h1{
+                color: white;
+            }
+            li a{
+                color: white;
+            }
+        </style>
 
 </head>
 
@@ -27,9 +42,9 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
         <?php 
         $hal = isset($_GET['hal']) ? $_GET['hal'] : '';
         ?>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="navbar-brand text-white" href="#">Navbar</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

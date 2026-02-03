@@ -67,7 +67,7 @@ exit;
 ?>
 
 <div class="container my-3 ">
-<table class="table  table-striped ">
+<table class="table  table-striped table-dark">
     <thead class="table-dark">
     <tr>
         <th>No.</th>

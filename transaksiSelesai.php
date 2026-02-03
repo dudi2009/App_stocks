@@ -15,8 +15,8 @@ WHERE id_penjualan='$id_penjualan'
 ?>
 <div class="container text-center my-5 align-middle">
 
-    <h4>Tansaksi Selesai</h4>
-    <h5>Total Bayar : Rp <?= number_format($total['total']) ?></h5>
+    <h4 class="text-light">Tansaksi Selesai</h4>
+    <h5 class="text-light">Total Bayar : Rp <?= number_format($total['total'] ?? 0) ?></h5>
     
     <a href="?hal=transaksi" class="btn btn-success">
         Transaksi Baru

@@ -82,13 +82,14 @@
     }
         }
         ?>
-    <table class="table table-striped">
+    <table class="table table-striped table-dark">
         <thead>
             <tr>
                 <th>id</th>
                 <th>Nama</th>
                 <th>Price</th>
                 <th>Stock</th>
+                <th>action</th>
             </tr>
         </thead>
         <tbody>
