@@ -89,6 +89,7 @@
                 <th>Nama</th>
                 <th>Alamat</th>
                 <th>No Hp</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>

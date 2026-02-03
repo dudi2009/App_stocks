@@ -97,6 +97,15 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
             case 'transaksi':
                 include "transaksi.php";
                 break;
+            case 'transaksiMulai':
+                include "transaksiMulai.php";
+                break;
+            case 'transaksiBarang':
+                include "transaksiBarang.php";
+                break;
+            case 'transaksiSelesai':
+                include "transaksiSelesai.php";
+                break;
             default:
                 echo "<center><h3>Maaf. Halaman tidak di temukan !</h3></center>";
                 break;
