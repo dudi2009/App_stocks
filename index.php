@@ -71,11 +71,9 @@ cekLogin();
                             <a class="nav-link" href="?hal=stock">Stock Barang</a>
                         </li>
                         
-                        <?php if (isPetugas() || isAdmin()): ?>
                         <li class="nav-item <?= $hal == 'transaksi' ? 'active' : '' ?>">
                             <a class="nav-link" href="?hal=transaksi">Transaksi</a>
                         </li>
-                        <?php endif; ?>
                         
                         <?php if (isPetugas() || isAdmin()): ?>
                         <li class="nav-item <?= $hal == 'manageUser' ? 'active' : '' ?>">
@@ -142,16 +140,16 @@ cekLogin();
                 if (cekAkses(['admin', 'petugas'])) include "stockUpdate.php";
                 break;
             case 'transaksi':
-                if (cekAkses(['admin', 'petugas'])) include "transaksi.php";
+                include "transaksi.php";
                 break;
             case 'transaksiMulai':
-                if (cekAkses(['admin', 'petugas'])) include "transaksiMulai.php";
+                include "transaksiMulai.php";
                 break;
             case 'transaksiBarang':
-                if (cekAkses(['admin', 'petugas'])) include "transaksiBarang.php";
+                include "transaksiBarang.php";
                 break;
             case 'transaksiSelesai':
-                if (cekAkses(['admin', 'petugas'])) include "transaksiSelesai.php";
+                include "transaksiSelesai.php";
                 break;
             case 'manageUser':
                 if (cekAkses(['admin', 'petugas'])) include "manageUser.php";

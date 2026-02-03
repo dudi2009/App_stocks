@@ -3,6 +3,7 @@
         <path d="M13.828 11.943c.567-.07 1.468-.027 1.645.204.135.176-.004.966-.233 1.533-.23.563-.572.961-.762 1.115s-.333.094-.23-.137c.105-.23.684-1.663.455-1.963-.213-.278-1.177-.177-1.625-.13l-.09.009q-.142.013-.233.024c-.193.021-.245.027-.274-.032-.074-.209.779-.556 1.347-.623" />
     </svg></h1>
 <div class="container">
+    <?php if (isPetugas() || isAdmin()): ?>
     <form action="" method="POST">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -82,14 +83,17 @@
     }
         }
         ?>
+    <?php endif; ?>
     <table class="table table-striped table-dark">
         <thead>
             <tr>
-                <th>id</th>
+                <th>No</th>
                 <th>Nama</th>
                 <th>Price</th>
                 <th>Stock</th>
-                <th>action</th>
+                <?php if (isPetugas() || isAdmin()): ?>
+                <th>Action</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -107,10 +111,12 @@
                         <td><?= $row['nama_produk'] ?></td>
                         <td><?= $row['harga'] ?></td>
                         <td><?= $row['stok'] ?></td>
+                        <?php if (isPetugas() || isAdmin()): ?>
                         <td>
                             <a href="?hal=stockDelete&id_produk=<?php echo $row['id_produk'] ?>&nama_produk=<?= $row['nama_produk'] ?>" class="btn btn-danger">Hapus</a>
                             <a href="?hal=stockUpdate&id_produk=<?php echo $row['id_produk'] ?>&nama_produk=<?= $row['nama_produk'] ?>" class="btn btn-dark px-3">Edit</a>
                         </td>
+                        <?php endif; ?>
 
 
                     </tr>
