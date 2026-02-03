@@ -1,5 +1,12 @@
 <?php
-$koneksi = new  mysqli("localhost", "root", "", "db_stock");
+session_start();
+$koneksi = new mysqli("localhost", "root", "", "db_stock");
+
+// Include file cek akses
+include "cek_akses.php";
+
+// Cek apakah sudah login
+cekLogin();
 ?>
 <!doctype html>
 <html lang="en">
@@ -53,17 +60,42 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
                         <li class="nav-item <?= $hal == 'home' ? 'active' : '' ?>">
                             <a class="nav-link active" aria-current="page" href="?hal=home">Home</a>
                         </li>
+                        
+                        <?php if (isPetugas() || isAdmin()): ?>
                         <li class="nav-item <?= $hal == 'pelanggan' ? 'active' : '' ?>">
-                            <a class="nav-link" href="?hal=pelanggan">Pelangan</a>
+                            <a class="nav-link" href="?hal=pelanggan">Pelanggan</a>
                         </li>
+                        <?php endif; ?>
+                        
                         <li class="nav-item <?= $hal == 'stock' ? 'active' : '' ?>">
                             <a class="nav-link" href="?hal=stock">Stock Barang</a>
                         </li>
+                        
+                        <?php if (isPetugas() || isAdmin()): ?>
                         <li class="nav-item <?= $hal == 'transaksi' ? 'active' : '' ?>">
-                            <a class="nav-link" href="?hal=transaksi">transaksi</a>
+                            <a class="nav-link" href="?hal=transaksi">Transaksi</a>
+                        </li>
+                        <?php endif; ?>
+                        
+                        <?php if (isPetugas() || isAdmin()): ?>
+                        <li class="nav-item <?= $hal == 'manageUser' ? 'active' : '' ?>">
+                            <a class="nav-link" href="?hal=manageUser">Kelola User</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                    
+                    <!-- User Info & Logout -->
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <span class="nav-link text-light">
+                                👤 <?= $_SESSION['username'] ?> 
+                                <span class="badge bg-<?= $_SESSION['lvl'] == 'admin' ? 'danger' : ($_SESSION['lvl'] == 'petugas' ? 'warning' : 'info') ?>">
+                                    <?= ucfirst($_SESSION['lvl']) ?>
+                                </span>
+                            </span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                            <a class="nav-link text-danger" href="logout.php">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -89,7 +121,7 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
 
         switch ($hal) {
             case 'pelanggan':
-                include "pelanggan.php";
+                if (cekAkses(['admin', 'petugas'])) include "pelanggan.php";
                 break;
             case 'stock':
                 include "stock.php";
@@ -98,31 +130,40 @@ $koneksi = new  mysqli("localhost", "root", "", "db_stock");
                 include "home.php";
                 break;
             case 'pelangganDelete':
-                include "pelangganDelete.php";
+                if (cekAkses(['admin', 'petugas'])) include "pelangganDelete.php";
                 break;
             case 'pelangganUpdate':
-                include "pelangganUpdate.php";
+                if (cekAkses(['admin', 'petugas'])) include "pelangganUpdate.php";
                 break;
             case 'stockDelete':
-                include "stockDelete.php";
+                if (cekAkses(['admin', 'petugas'])) include "stockDelete.php";
                 break;
             case 'stockUpdate':
-                include "stockUpdate.php";
+                if (cekAkses(['admin', 'petugas'])) include "stockUpdate.php";
                 break;
             case 'transaksi':
-                include "transaksi.php";
+                if (cekAkses(['admin', 'petugas'])) include "transaksi.php";
                 break;
             case 'transaksiMulai':
-                include "transaksiMulai.php";
+                if (cekAkses(['admin', 'petugas'])) include "transaksiMulai.php";
                 break;
             case 'transaksiBarang':
-                include "transaksiBarang.php";
+                if (cekAkses(['admin', 'petugas'])) include "transaksiBarang.php";
                 break;
             case 'transaksiSelesai':
-                include "transaksiSelesai.php";
+                if (cekAkses(['admin', 'petugas'])) include "transaksiSelesai.php";
+                break;
+            case 'manageUser':
+                if (cekAkses(['admin', 'petugas'])) include "manageUser.php";
+                break;
+            case 'manageUserProses':
+                if (cekAkses(['admin', 'petugas'])) include "manageUserProses.php";
+                break;
+            case 'manageUserDelete':
+                if (cekAkses(['admin', 'petugas'])) include "manageUserDelete.php";
                 break;
             default:
-                echo "<center><h3>Maaf. Halaman tidak di temukan !</h3></center>";
+                echo "<center><h3 class='text-light mt-5'>Maaf. Halaman tidak di temukan !</h3></center>";
                 break;
         }
     } else {

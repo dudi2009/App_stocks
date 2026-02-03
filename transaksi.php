@@ -50,7 +50,7 @@ $id_penjualan = $_GET['id_pelanggan'];
                 ?>
             </table>
         </div>
-        <div class="card-footer text-body-secondary text-light" style="background-color: #272727;">
+        <div class="card-footer text-body-secondary text-light" style="background-color: #272727;border:solid 1px black;">
             <p class="text-light">Transaksi</p>
         </div>
     </div>
