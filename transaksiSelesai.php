@@ -13,10 +13,17 @@ UPDATE penjualan SET total='$total[total]'
 WHERE id_penjualan='$id_penjualan'
 ");
 ?>
+<div class="container text-center my-5 align-middle">
 
-<h4>Tansaksi Selesai</h4>
-<h5>Total Bayar : Rp <?= number_format($total['total']) ?></h5>
-
-<a href="?hal=transaksi" class="btn btn-success">
-    Transaksi Baru
-</a>
+    <h4>Tansaksi Selesai</h4>
+    <h5>Total Bayar : Rp <?= number_format($total['total']) ?></h5>
+    
+    <a href="?hal=transaksi" class="btn btn-success">
+        Transaksi Baru
+    </a>
+    
+    
+</div>
+<div class="d-flex justify-content-center">
+    <img src="https://i.pinimg.com/1200x/04/cc/b0/04ccb0a0d278052efc88ff4d141a1d4f.jpg" class="w-25">
+</div>

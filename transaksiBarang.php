@@ -66,15 +66,19 @@ exit;
 
 ?>
 
-<div class="container">
-<table class="table table-bordered text-center">
+<div class="container my-3 ">
+<table class="table  table-striped ">
+    <thead class="table-dark">
     <tr>
-        <th>Produk</th>
+        <th>No.</th>
+        <th class="text-start">Produk</th>
         <th>Harga</th>
         <th>Stok</th>
         <th>Beli</th>
     </tr>
+    </thead>
     <?php 
+    $no = 1;
     $produk = mysqli_query($koneksi,"SELECT * FROM produk");
 
     while($p=mysqli_fetch_assoc($produk)){
@@ -84,8 +88,10 @@ exit;
         AND id_produk='$p[id_produk]'"));
         $jumlah = $id['jumlah'] ?? 0;
     ?>
+
     <tr>
-        <td><?= $p['nama_produk'] ?></td>
+        <td><?= $no++ ?></td>
+        <td class="text-start"><?= $p['nama_produk'] ?></td>
         <td>RP <?= number_format($p['harga']) ?></td>
         <td><?= $p['stok'] ?></td>
         <td>
@@ -96,5 +102,5 @@ exit;
     </tr>
     <?php } ?>
 </table>
-</div>
 <a href="?hal=transaksiSelesai&id=<?= $id_penjualan ?>" class="btn btn-primary">Selesai</a>
+</div>
