@@ -1,10 +1,9 @@
 <?php
+ob_start();
 session_start();
 $koneksi = new mysqli("localhost", "root", "", "db_stock");
-
 // Include file cek akses
 include "cek_akses.php";
-
 // Cek apakah sudah login
 cekLogin();
 ?>
@@ -73,6 +72,10 @@ cekLogin();
                         
                         <li class="nav-item <?= $hal == 'transaksi' ? 'active' : '' ?>">
                             <a class="nav-link" href="?hal=transaksi">Transaksi</a>
+                        </li>
+                        
+                        <li class="nav-item <?= $hal == 'riwayat' ? 'active' : '' ?>">
+                            <a class="nav-link" href="?hal=riwayat">Riwayat Transaksi</a>
                         </li>
                         
                         <?php if (isPetugas() || isAdmin()): ?>
@@ -160,6 +163,9 @@ cekLogin();
             case 'manageUserDelete':
                 if (cekAkses(['admin', 'petugas'])) include "manageUserDelete.php";
                 break;
+            case 'riwayat':
+                include "riwayatTransaksi.php";
+                break;
             default:
                 echo "<center><h3 class='text-light mt-5'>Maaf. Halaman tidak di temukan !</h3></center>";
                 break;
@@ -183,4 +189,5 @@ cekLogin();
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
 </body>
+<?php ob_end_flush(); ?>
 </html>

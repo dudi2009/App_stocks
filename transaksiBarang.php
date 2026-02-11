@@ -1,4 +1,5 @@
 <?php
+// Pastikan tidak ada output sebelum header()
 $id_penjualan = $_GET['id_penjualan'] ?? $_GET['id'] ?? 0;
 
 if(isset($_GET['aksi'])){
@@ -13,57 +14,56 @@ if(isset($_GET['aksi'])){
     AND id_produk='$id_produk'
     "));
 
-if($aksi=="tambah" && $produk['stok']>0){
-    if($detail){
-        $jumlah = $detail['jumlah'] + 1;
-        $subtotal = $jumlah * $produk['harga'];
-        mysqli_query($koneksi, "
-        UPDATE detail_penjualan
-        SET jumlah='$jumlah', subtotal='$subtotal'
-        WHERE id_penjualan='$id_penjualan'
-        AND id_produk='$id_produk'
-        "
-        );
-    }else {
+    if($aksi=="tambah" && $produk['stok']>0){
+        if($detail){
+            $jumlah = $detail['jumlah'] + 1;
+            $subtotal = $jumlah * $produk['harga'];
+            mysqli_query($koneksi, "
+            UPDATE detail_penjualan
+            SET jumlah='$jumlah', subtotal='$subtotal'
+            WHERE id_penjualan='$id_penjualan'
+            AND id_produk='$id_produk'
+            "
+            );
+        }else {
+            mysqli_query($koneksi,"
+            INSERT INTO detail_penjualan 
+            (id_penjualan,id_produk,jumlah,harga,subtotal)
+            VALUES
+            ('$id_penjualan','$id_produk',1,'$produk[harga]','$produk[harga]')
+            ");
+        }
         mysqli_query($koneksi,"
-        INSERT INTO detail_penjualan 
-        (id_penjualan,id_produk,jumlah,harga,subtotal)
-        VALUES
-        ('$id_penjualan','$id_produk',1,'$produk[harga]','$produk[harga]')
+        UPDATE produk SET stok = stok - 1
+        WHERE id_produk='$id_produk'");
+    }
+    if($aksi=="kurang" && $detail){
+        $jumlah = $detail['jumlah'] - 1;
+
+        if($jumlah<=0){
+            mysqli_query($koneksi,"
+            DELETE FROM detail_penjualan 
+            WHERE id_penjualan='$id_penjualan'
+            AND id_produk='$id_produk'
+            ");
+        }else{
+            $subtotal = $jumlah * $produk ['harga'];
+            mysqli_query($koneksi,"
+            UPDATE detail_penjualan 
+            SET jumlah='$jumlah', subtotal='$subtotal'
+            WHERE id_penjualan='$id_penjualan'
+            AND id_produk='$id_produk'
+            ");
+        }
+
+        mysqli_query($koneksi,"
+        UPDATE produk SET stok = stok + 1
+        WHERE id_produk='$id_produk'
         ");
     }
-    mysqli_query($koneksi,"
-    UPDATE produk SET stok = stok - 1
-    WHERE id_produk='$id_produk'");
+    header("Location:?hal=transaksiBarang&id=$id_penjualan");
+    exit;
 }
-if($aksi=="kurang" && $detail){
-    $jumlah = $detail['jumlah'] - 1;
-
-    if($jumlah<=0){
-        mysqli_query($koneksi,"
-        DELETE FROM detail_penjualan 
-        WHERE id_penjualan='$id_penjualan'
-        AND id_produk='$id_produk'
-        ");
-    }else{
-        $subtotal = $jumlah * $produk ['harga'];
-        mysqli_query($koneksi,"
-        UPDATE detail_penjualan 
-        SET jumlah='$jumlah', subtotal='$subtotal'
-        WHERE id_penjualan='$id_penjualan'
-        AND id_produk='$id_produk'
-        ");
-    }
-
-    mysqli_query($koneksi,"
-    UPDATE produk SET stok = stok + 1
-    WHERE id_produk='$id_produk'
-    ");
-}
-header("Location:?hal=transaksiBarang&id=$id_penjualan");
-exit;
-}
-
 ?>
 
 <div class="container my-3 ">

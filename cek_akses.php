@@ -3,7 +3,7 @@
 
 function cekLogin() {
     if (!isset($_SESSION['id_user'])) {
-        echo "<script>window.location.href='login.php';</script>";
+        echo "<script>window.location.href='login_user.php';</script>";
         exit;
     }
 }

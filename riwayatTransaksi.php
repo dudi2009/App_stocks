@@ -1,14 +1,19 @@
 <?php
 // Halaman untuk user melihat riwayat transaksi (view only)
+$nama_pelanggan = $_SESSION['username'];
+$level = $_SESSION['lvl'];
 ?>
 <div class="container mt-4">
     <h3 class="text-light">📋 Riwayat Transaksi</h3>
-    
     <table class="table table-dark table-striped mt-3">
         <thead>
             <tr>
                 <th>No</th>
                 <th>ID Transaksi</th>
+                <!-- Kolom Nama hanya untuk admin/petugas -->
+                <?php if ($level != 'user'): ?>
+                <th>Nama</th>
+                <?php endif; ?>
                 <th>Tanggal</th>
                 <th>Total</th>
                 <th>Detail</th>
@@ -16,13 +21,22 @@
         </thead>
         <tbody>
             <?php
-            $query = mysqli_query($koneksi, "
-                SELECT p.*, pel.nama as nama_pelanggan 
-                FROM penjualan p 
-                LEFT JOIN pelanggan pel ON p.id_pelanggan = pel.id_pelanggan
-                ORDER BY p.id_penjualan DESC
-            ");
-            
+            if ($level == 'user') {
+                $query = mysqli_query($koneksi, "
+                    SELECT p.*, pel.nama_pelanggan 
+                    FROM penjualan p 
+                    LEFT JOIN pelanggan pel ON p.id_pelanggan = pel.id_pelanggan
+                    WHERE pel.nama_pelanggan = '$nama_pelanggan'
+                    ORDER BY p.id_penjualan DESC
+                ");
+            } else {
+                $query = mysqli_query($koneksi, "
+                    SELECT p.*, pel.nama_pelanggan 
+                    FROM penjualan p 
+                    LEFT JOIN pelanggan pel ON p.id_pelanggan = pel.id_pelanggan
+                    ORDER BY p.id_penjualan DESC
+                ");
+            }
             $no = 1;
             if (mysqli_num_rows($query) == 0) {
                 echo "<tr><td colspan='5' class='text-center'>Belum ada transaksi</td></tr>";
@@ -32,13 +46,21 @@
             <tr>
                 <td><?= $no++ ?></td>
                 <td>#<?= $row['id_penjualan'] ?></td>
+                <!-- Kolom Nama hanya untuk admin/petugas -->
+                <?php if ($level != 'user'): ?>
+                <td><?= $row['nama_pelanggan'] ?? '-' ?></td>
+                <?php endif; ?>
                 <td><?= $row['tanggal'] ?? '-' ?></td>
                 <td>Rp <?= number_format($row['total'] ?? 0) ?></td>
                 <td>
                     <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detailModal<?= $row['id_penjualan'] ?>">
                         Lihat Detail
                     </button>
-                    
+                    <!-- <?php if ($level == 'admin' || $level == 'petugas'): ?>
+                    <a href="transaksiDelete.php?id=<?= $row['id_penjualan'] ?>" class="btn btn-sm btn-danger ms-1" onclick="return confirm('Yakin ingin menghapus transaksi ini?')">
+                        Hapus
+                    </a>
+                    <?php endif; ?> -->
                     <!-- Modal Detail -->
                     <div class="modal fade" id="detailModal<?= $row['id_penjualan'] ?>" tabindex="-1">
                         <div class="modal-dialog">
